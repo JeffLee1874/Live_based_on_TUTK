@@ -3,119 +3,251 @@ package com.example.tutkdemo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.example.tutkdemo.view.page;
+import com.example.tutkdemo.model.FrameBuffer;
+import com.example.tutkdemo.model.MediaHandler;
+import com.example.tutkdemo.model.Utils;
+import com.example.tutkdemo.tflite.Classifier;
+import com.example.tutkdemo.tflite.TFLiteObjectDetectionAPIModel;
+import com.example.tutkdemo.view.OverlayView;
+import com.example.tutkdemo.view.PopUpWindow;
+import com.example.tutkdemo.view.SimplePage;
 import com.example.tutkdemo.viewmodel.ListViewAdapter;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
-//import com.example.tutkdemo.model.pageholder;
-//import com.example.tutkdemo.view.page;
+import java.util.Objects;
+
+import at.markushi.ui.CircleButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final int REFRESH_DELAY = 1000;
-//    private pageholder page1holder;
-    // 是否使用特殊的标题栏背景颜色，android5.0以上可以设置状态栏背景色，如果不使用则使用透明色值
-    protected boolean useThemestatusBarColor = false;
-    //是否使用状态栏文字和图标为暗色，如果状态栏采用了白色系，则需要使状态栏和图标为暗色，android6.0以上可以设置
-    protected boolean useStatusBarColor = true;
     private SmartRefreshLayout mPullToRefreshView;
     private TextView textView;
-    private List<page> pageList = new ArrayList<page>();
+    private FloatingActionButton button_add_by_id;
+    private CircleButton confirm_button;
+    private CircleButton cancel_button;
+    private List<SimplePage> pageList = new ArrayList<SimplePage>();
+    private ListViewAdapter listViewAdapter;
+    private MaterialEditText UID_text;
+    private MaterialEditText username_text;
+    private MaterialEditText password_text;
+    private MediaHandler mediaHandler;
+    private PopUpWindow popUpWindow;
+    private OverlayView overlayview;
+    private Thread ReThread;
 
+    private Classifier detector;
+    private static final int TF_OD_API_INPUT_SIZE = 300;
+    private static final boolean TF_OD_API_IS_QUANTIZED = true;
+    private static final String TF_OD_API_MODEL_FILE = "detect.tflite";
+    private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/labelmap.txt";
+    private boolean stop = false;
+    private Handler handler;
+    private static final int COMPLETED = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-////        page page = new page("Start");
-//        binding.setPage1(page);
+        confirm_button = (CircleButton) findViewById(R.id.confirm);
+        cancel_button = (CircleButton) findViewById(R.id.cancel);
         textView = (TextView)findViewById(R.id.title);
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        button_add_by_id = (FloatingActionButton) findViewById(R.id.add_by_id);
+        final ListView listView = (ListView) findViewById(R.id.list_view);
         mPullToRefreshView = (SmartRefreshLayout) findViewById(R.id.pull_to_refresh);
-
         mPullToRefreshView.setRefreshHeader(new PhoenixHeader(this));
         Typeface mtypeface=Typeface.createFromAsset(this.getAssets(),"HanyiSentyChalk2018.ttf");
         textView.setTypeface(mtypeface);
         mPullToRefreshView.setEnableRefresh(true);
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == COMPLETED) {
+                    listViewAdapter = new ListViewAdapter(MainActivity.this,
+                            R.layout.item_simple, pageList);
+                    listView.setAdapter(listViewAdapter);
+                }
+            }
+        };
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashSet<String> UID = (HashSet<String>) Utils.getUID(MainActivity.this);
+                if(UID!=null)
+                {
+                    for(String i : UID)
+                    {
+                        HashMap<String, String> hashMap = (HashMap<String, String>) Utils.getUserInfo(MainActivity.this,i);
+                        SimplePage page1 = new SimplePage(i, hashMap.get("username"), hashMap.get("password"));
+                        pageList.add(page1);
+                    }
+                }
+
+                listViewAdapter = new ListViewAdapter(MainActivity.this,
+                        R.layout.item_simple, pageList);
+                listView.setAdapter(listViewAdapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        SimplePage simplePage = (SimplePage) parent.getItemAtPosition(position);
+                        mediaHandler = listViewAdapter.getMediaHandler();
+                        if(mediaHandler == null)
+                            Log.i("UI测试", "YYYYYYYYYYY");
+                        listViewAdapter.stop();
+                        while(!listViewAdapter.isStop() || !listViewAdapter.getClient().isStop())
+                        {
+
+                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("解码器", mediaHandler);
+                        bundle.putString("UID", simplePage.getUID()) ;
+                        overlayview.invalidate();
+                        Intent intent = new Intent(MainActivity.this, VideoDetailActivity.class);
+                        intent.putExtras(bundle);
+                        //启动
+                        if(mediaHandler == null)
+                            Log.i("UI测试", "空");
+                        Log.i("UI测试", "跳转测试");
+                        startActivityForResult(intent, 1);
+                    }
+                });
+            }
+        }).start();
+
         mPullToRefreshView.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!pageList.isEmpty())
+                        {
+                            stop = true;
+                            listViewAdapter.stop();
+                            while (!listViewAdapter.getClient().isStop())
+                            {
+                                Log.i("刷新测试", String.valueOf(listViewAdapter.getClient().isStop()));
+                            }
+                            Log.i("刷新测试", "外部" + String.valueOf(listViewAdapter.getClient().isStop()));
+//                            listViewAdapter = new ListViewAdapter(MainActivity.this,
+//                                    R.layout.item_simple, pageList);
+//                            listView.setAdapter(listViewAdapter);
+
+                            Message msg = new Message();
+                            msg.what = COMPLETED;
+                            handler.sendMessage(msg);
+                            stop = false;
+                            ReThread = new Thread(new mRunnable());
+                            ReThread.start();
+                        }
+                        refreshLayout.finishRefresh(true);
+                    }
+                }).start();
             }
         });
 
-        page page1 = new page("开始");
-        pageList.add(page1);
+        button_add_by_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpWindow = new PopUpWindow(MainActivity.this);
+                confirm_button = popUpWindow.getContentView().findViewById(R.id.confirm);
+                cancel_button = popUpWindow.getContentView().findViewById(R.id.cancel);
+                UID_text = popUpWindow.getContentView().findViewById(R.id.UID);
+                username_text = popUpWindow.getContentView().findViewById(R.id.username);
+                password_text = popUpWindow.getContentView().findViewById(R.id.password);
+                confirm_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        confirm_button.setPressed(true);
+                        if (!(UID_text.getText()).toString().equals("") && !(username_text.getText()).toString().equals("") && !(password_text.getText()).toString().equals(""))
+                        {
+                            pageList.add(new SimplePage(Objects.requireNonNull(UID_text.getText()).toString(), Objects.requireNonNull(username_text.getText()).toString(), Objects.requireNonNull(password_text.getText()).toString()));
+                            listView.setAdapter(new ListViewAdapter(MainActivity.this, R.layout.item_simple, pageList));
+                            LinkedHashSet<String> UID = (LinkedHashSet<String>) Utils.getUID(MainActivity.this);
+                            if(UID != null)
+                            {
+                                UID.add((UID_text.getText()).toString());
+                                Utils.saveUID(MainActivity.this, UID);
+                            }
+                            else
+                            {
+                                UID = new LinkedHashSet<>();
+                                UID.add((UID_text.getText()).toString());
+                                Utils.saveUID(MainActivity.this, null);
+                                Utils.saveUID(MainActivity.this, UID);
+                            }
+                            LinkedHashSet<String> linkedHashSet= new LinkedHashSet<String>();
+                            linkedHashSet.add((UID_text.getText()).toString());
+                            linkedHashSet.add((username_text.getText()).toString());
+                            linkedHashSet.add((password_text.getText()).toString());
+                            Utils.saveUserInfo(MainActivity.this, (UID_text.getText()).toString(), linkedHashSet);
+                            popUpWindow.dismiss();
+                        }
+                        else
+                        {
+                            Toast toast= Toast.makeText(getApplicationContext(), "Please Enter Correct Information", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        confirm_button.setPressed(false);
+                    }
+                });
 
-        ListViewAdapter listViewAdapter = new ListViewAdapter(MainActivity.this,
-                R.layout.item, pageList);
-        listView.setAdapter(listViewAdapter);
-
-
-//        mSurfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-//        mediaHandler = new MediaHandler(mSurfaceView);
-//        page1holder = new pageholder(mSurfaceView, getApplicationContext());
-//        mReadButton = (Button) findViewById(R.id.btn_readfile);
-
-//        mPullToRefreshView.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                mPullToRefreshView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mPullToRefreshView.setRefreshing(false);
-//                    }
-//                }, REFRESH_DELAY);
-//            }
-//        });
-//        mPullToRefreshView.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(RefreshLayout refreshlayout) {
-//                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-//            }
-//        });
-    }
-
-    protected void setStatusBar(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            //根据上面设置是否对状态栏单独设置颜色
-//            if (useThemestatusBarColor) {
-//                getWindow().setStatusBarColor(getResources().getColor(R.color.colorTheme));//设置状态栏背景色
-//            } else {
-                getWindow().setStatusBarColor(Color.TRANSPARENT);//透明
-//            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4到5.0
-            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-        } else {
-            Toast.makeText(this, "低于4.4的android系统版本不存在沉浸式状态栏", Toast.LENGTH_SHORT).show();
+                cancel_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        confirm_button.setPressed(true);
+                        popUpWindow.dismiss();
+                        confirm_button.setPressed(false);
+                    }
+                });
+                popUpWindow.setBlurBackgroundEnable(true);
+                popUpWindow.setAdjustInputMethod(true);
+                popUpWindow.showPopupWindow();
+            }
+        });
+        try {
+            detector =
+                    TFLiteObjectDetectionAPIModel.create(
+                            getAssets(),
+                            TF_OD_API_MODEL_FILE,
+                            TF_OD_API_LABELS_FILE,
+                            TF_OD_API_INPUT_SIZE,
+                            TF_OD_API_IS_QUANTIZED);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && useStatusBarColor) {//android6.0以后可以对状态栏文字颜色和图标进行修改
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+
+        ReThread = new Thread(new mRunnable());
+        ReThread.start();
     }
 
     @Override
@@ -132,8 +264,60 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        readFileThread.interrupt();
-//        page1holder.readFileThread.interrupt();
     }
 
+
+        public Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+        if(bm == null)
+        {
+            Log.i("识别", "吃屎了");
+            return null;
+        }
+        // 获得图片的宽高
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
+    }
+
+    class mRunnable implements Runnable{
+        @Override
+        public void run() {
+            while(listViewAdapter.getOverlayView()==null)
+            {}
+            Log.i("huahua","chulaile");
+            overlayview=listViewAdapter.getOverlayView();
+            while(!stop)
+            {
+                if(FrameBuffer.bitmaps.isEmpty())
+                    continue;
+
+                Bitmap b = FrameBuffer.bitmaps.poll();
+                if(b !=null)
+                {
+                    Bitmap bitmap = Bitmap.createBitmap(zoomImg(b, 300, 300));
+                    List<Classifier.Recognition> recognitions = detector.recognizeImage(bitmap);
+//            overlayView.draw(canvas);
+//                    processImage(bitmap);
+                    for(Classifier.Recognition i : recognitions) {
+                        Log.i("识别", i.toString());
+                    }
+                    if(overlayview==null)
+                        Log.i("huahua","chishi");
+                    Log.i("overlay", "Weight: "+overlayview.getWidth()+"  Height: "+overlayview.getHeight());
+                    //width:974 Height:473
+                    overlayview.setResultRecognitions(recognitions);
+//                    Log.i("huahua","chishihou");
+                    overlayview.invalidate();
+                }
+            }
+        }
+    }
 }

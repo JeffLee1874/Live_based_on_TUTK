@@ -11,10 +11,10 @@
         <option name="pid" value="" />
       </filter>
       <filter>
-        <option name="logLevel" value="verbose" />
-        <option name="logMessagePattern" value="Read from assets" />
-        <option name="logTagPattern" value="" />
-        <option name="name" value="assets file" />
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="读视频" />
+        <option name="name" value="读视频" />
         <option name="packageNamePattern" value="" />
         <option name="pid" value="" />
       </filter>
@@ -29,16 +29,16 @@
       <filter>
         <option name="logLevel" value="info" />
         <option name="logMessagePattern" value="" />
-        <option name="logTagPattern" value="len" />
-        <option name="name" value="len" />
+        <option name="logTagPattern" value="刷新测试" />
+        <option name="name" value="刷新测试" />
         <option name="packageNamePattern" value="" />
         <option name="pid" value="" />
       </filter>
       <filter>
         <option name="logLevel" value="info" />
         <option name="logMessagePattern" value="" />
-        <option name="logTagPattern" value="fuck" />
-        <option name="name" value="count" />
+        <option name="logTagPattern" value="储存" />
+        <option name="name" value="储存" />
         <option name="packageNamePattern" value="" />
         <option name="pid" value="" />
       </filter>
@@ -59,10 +59,58 @@
         <option name="pid" value="" />
       </filter>
       <filter>
-        <option name="logLevel" value="error" />
+        <option name="logLevel" value="info" />
         <option name="logMessagePattern" value="" />
-        <option name="logTagPattern" value="" />
-        <option name="name" value="Unnamed-0" />
+        <option name="logTagPattern" value="长度" />
+        <option name="name" value="数组长度" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+      <filter>
+        <option name="logLevel" value="verbose" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="跳转" />
+        <option name="name" value="跳转" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+      <filter>
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="找文件" />
+        <option name="name" value="找文件" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+      <filter>
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="UI测试" />
+        <option name="name" value="UI测试" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+      <filter>
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="同步" />
+        <option name="name" value="同步" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+      <filter>
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="ret" />
+        <option name="name" value="ret" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+      <filter>
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="识别" />
+        <option name="name" value="识别" />
         <option name="packageNamePattern" value="" />
         <option name="pid" value="" />
       </filter>
@@ -101,9 +149,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="layoutResourceFile" />
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectId" id="1h26sSjXcDcV69wB2wJR1BR3d6i" />
   <component name="ProjectViewState">
@@ -112,26 +165,33 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="d84bc7ce" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-08T09:17:46.228Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_API_29_x86" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-15T10:32:08.392Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/assets" />
-    <property name="project.structure.last.edited" value="SDK Location" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/example/tutkdemo/view" />
+    <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Default Config" />
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\tutk-android\app\src\main\res\drawable" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.tutkdemo.view" />
+      <recent name="com.example.tutkdemo.viewmodel" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\TUTKdemo\app\src\main\assets" />
-      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\TUTKdemo\app\src\main\jniLibs\x86" />
-      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\TUTKdemo\app\src\main\jniLibs" />
-      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\TUTKdemo\app\src\main\java\com\example\tutkdemo" />
-      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\TUTKdemo\app\src\main\jniLibs\armeabi-v7a" />
+      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\tutk-android\app\src\main\java\com\example\tutkdemo\view" />
+      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\tutk-android\app\src\main\java\com\example\tutkdemo\model" />
+      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\tutk-android\app\src\main\res\font" />
+      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\tutk-android\app\src\main\assets" />
+      <recent name="C:\Users\Jeff Lee\AndroidStudioProjects\TUTKdemo\app\src\main\res\drawable" />
     </key>
   </component>
   <component name="RunManager">
@@ -205,60 +265,177 @@
       <option name="presentableId" value="Default" />
       <updated>1599197046043</updated>
     </task>
+    <task id="LOCAL-00001" summary="UI 2.0">
+      <created>1600074104741</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600074104742</updated>
+    </task>
+    <task id="LOCAL-00002" summary="solve screenshot problem">
+      <created>1600188822858</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600188822859</updated>
+    </task>
+    <task id="LOCAL-00003" summary="TUTK BETA-1.0">
+      <created>1600271928633</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1600271928633</updated>
+    </task>
+    <task id="LOCAL-00004" summary="TUTK BETA-1.0.1 (Fix refresh problem)">
+      <created>1600322362662</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1600322362662</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="UI 2.0" />
+    <MESSAGE value="solve screenshot problem" />
+    <MESSAGE value="TUTK BETA-1.0" />
+    <MESSAGE value="TUTK BETA-1.0.1 (Fix refresh problem)" />
+    <option name="LAST_COMMIT_MESSAGE" value="TUTK BETA-1.0.1 (Fix refresh problem)" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="367" y="74" key="#Code_Folding" timestamp="1599740804981">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="367" y="74" key="#Code_Folding/0.0.1549.831@0.0.1549.831" timestamp="1599740804981" />
     <state x="367" y="74" key="#Notifications" timestamp="1599474702596">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="367" y="74" key="#Notifications/0.0.1549.831@0.0.1549.831" timestamp="1599474702596" />
-    <state x="292" y="147" key="#PSD" timestamp="1599633596749">
+    <state x="282" y="253" width="964" height="523" key="#PSD" timestamp="1600258807226">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="292" y="147" key="#PSD/0.0.1549.831@0.0.1549.831" timestamp="1599633596749" />
-    <state x="580" y="91" key="#com.intellij.ide.util.MemberChooser" timestamp="1599579357081">
+    <state x="282" y="253" width="964" height="523" key="#PSD/0.0.1549.831@0.0.1549.831" timestamp="1600258807226" />
+    <state x="505" y="170" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1599727143685">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="580" y="91" key="#com.intellij.ide.util.MemberChooser/0.0.1549.831@0.0.1549.831" timestamp="1599579357081" />
-    <state x="455" y="150" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1599553872361">
+    <state x="505" y="170" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1549.831@0.0.1549.831" timestamp="1599727143685" />
+    <state x="580" y="91" key="#com.intellij.ide.util.MemberChooser" timestamp="1600240944846">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="455" y="150" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1549.831@0.0.1549.831" timestamp="1599553872361" />
+    <state x="580" y="91" key="#com.intellij.ide.util.MemberChooser/0.0.1549.831@0.0.1549.831" timestamp="1600240944846" />
+    <state x="455" y="150" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1599641083729">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="455" y="150" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1549.831@0.0.1549.831" timestamp="1599641083729" />
     <state x="421" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1599292185340">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="421" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1549.831@0.0.1549.831" timestamp="1599292185340" />
-    <state x="505" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599202424384">
+    <state x="505" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600181416220">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="505" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1549.831@0.0.1549.831" timestamp="1599202424384" />
-    <state x="628" y="221" key="AndroidCreateXmlResourceDialog" timestamp="1599628312475">
+    <state x="505" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600181416220" />
+    <state x="505" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1599729282627">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="628" y="221" key="AndroidCreateXmlResourceDialog/0.0.1549.831@0.0.1549.831" timestamp="1599628312475" />
-    <state x="555" y="156" key="FileChooserDialogImpl" timestamp="1599628128220">
+    <state x="505" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1549.831@0.0.1549.831" timestamp="1599729282627" />
+    <state x="355" y="170" key="AndroidCreateResourceDirectoryDialog" timestamp="1600004657315">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="555" y="156" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1599628128220" />
-    <state x="276" y="57" key="SettingsEditor" timestamp="1599383467859">
+    <state x="355" y="170" key="AndroidCreateResourceDirectoryDialog/0.0.1549.831@0.0.1549.831" timestamp="1600004657315" />
+    <state x="355" y="170" key="AndroidCreateResourceFileDialog" timestamp="1599653896990">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="276" y="57" key="SettingsEditor/0.0.1549.831@0.0.1549.831" timestamp="1599383467859" />
-    <state x="93" y="93" width="1363" height="645" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1599295295258">
+    <state x="355" y="170" key="AndroidCreateResourceFileDialog/0.0.1549.831@0.0.1549.831" timestamp="1599653896990" />
+    <state x="927" y="223" key="AndroidCreateXmlResourceDialog" timestamp="1600225404922">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="93" y="93" width="1363" height="645" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1549.831@0.0.1549.831" timestamp="1599295295258" />
-    <state x="821" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1599618628966">
+    <state x="927" y="223" key="AndroidCreateXmlResourceDialog/0.0.1549.831@0.0.1549.831" timestamp="1600225404922" />
+    <state x="377" y="0" key="CommitChangelistDialog2" timestamp="1600322362145">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="821" y="239" key="com.intellij.ide.util.TipDialog/0.0.1549.831@0.0.1549.831" timestamp="1599618628966" />
-    <state x="931" y="290" key="edit.logcat.filter.dialog.dimensions" timestamp="1599555929023">
+    <state x="377" y="0" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600322362145" />
+    <state x="84" y="51" key="DiffContextDialog" timestamp="1600073910374">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="931" y="290" key="edit.logcat.filter.dialog.dimensions/0.0.1549.831@0.0.1549.831" timestamp="1599555929023" />
-    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup" timestamp="1599622758235">
+    <state x="84" y="51" key="DiffContextDialog/0.0.1549.831@0.0.1549.831" timestamp="1600073910374" />
+    <state x="555" y="156" key="FileChooserDialogImpl" timestamp="1599736889096">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup/0.0.1549.831@0.0.1549.831" timestamp="1599622758235" />
+    <state x="555" y="156" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1599736889096" />
+    <state width="1506" height="23" key="GridCell.Tab.0.bottom" timestamp="1600270671141">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="23" key="GridCell.Tab.0.bottom/0.0.1549.831@0.0.1549.831" timestamp="1600270671141" />
+    <state width="1506" height="23" key="GridCell.Tab.0.center" timestamp="1600270671141">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="23" key="GridCell.Tab.0.center/0.0.1549.831@0.0.1549.831" timestamp="1600270671141" />
+    <state width="1506" height="23" key="GridCell.Tab.0.left" timestamp="1600270671141">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="23" key="GridCell.Tab.0.left/0.0.1549.831@0.0.1549.831" timestamp="1600270671141" />
+    <state width="1506" height="23" key="GridCell.Tab.0.right" timestamp="1600270671141">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="23" key="GridCell.Tab.0.right/0.0.1549.831@0.0.1549.831" timestamp="1600270671141" />
+    <state x="106" y="70" key="MergeDialog" timestamp="1600073741759">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="106" y="70" key="MergeDialog/0.0.1549.831@0.0.1549.831" timestamp="1600073741759" />
+    <state x="477" y="121" key="MultipleFileMergeDialog" timestamp="1600073741763">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="477" y="121" key="MultipleFileMergeDialog/0.0.1549.831@0.0.1549.831" timestamp="1600073741763" />
+    <state x="421" y="35" key="SettingsEditor" timestamp="1599748993097">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="421" y="35" key="SettingsEditor/0.0.1549.831@0.0.1549.831" timestamp="1599748993097" />
+    <state x="367" y="144" key="Vcs.Push.Dialog.v2" timestamp="1600322442834">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="367" y="144" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1600322442834" />
+    <state x="93" y="93" width="1363" height="645" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1599636694363">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="93" y="93" width="1363" height="645" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1549.831@0.0.1549.831" timestamp="1599636694363" />
+    <state x="821" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1600147768954">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="821" y="239" key="com.intellij.ide.util.TipDialog/0.0.1549.831@0.0.1549.831" timestamp="1600147768954" />
+    <state x="566" y="327" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600322393860">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="566" y="327" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.831@0.0.1549.831" timestamp="1600322393860" />
+    <state x="931" y="290" key="edit.logcat.filter.dialog.dimensions" timestamp="1600265310312">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="931" y="290" key="edit.logcat.filter.dialog.dimensions/0.0.1549.831@0.0.1549.831" timestamp="1600265310312" />
+    <state x="476" y="188" key="git4idea.merge.GitPullDialog" timestamp="1600073510402">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="476" y="188" key="git4idea.merge.GitPullDialog/0.0.1549.831@0.0.1549.831" timestamp="1600073510402" />
+    <state x="517" y="24" key="refactoring.ChangeSignatureDialog" timestamp="1599660599228">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="517" y="24" key="refactoring.ChangeSignatureDialog/0.0.1549.831@0.0.1549.831" timestamp="1599660599228" />
+    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup" timestamp="1600254357568">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup/0.0.1549.831@0.0.1549.831" timestamp="1600254357568" />
   </component>
 </project>

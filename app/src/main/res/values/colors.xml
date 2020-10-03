@@ -5,4 +5,12 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorWhite">#FFFFFFFF</color>
+    <color name="bgBackSideColor">#FF00BFA5</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDarkGrey">#232727</color>
+    <color name="gray_50">#80CBC4</color>
+    <color name="gray_300">#00897B</color>
+    <color name="colorLightGrey">#FFF3E0</color>
+    <color name="colorRed">#E53935</color>
+    <color name="colorLittleTransparent">#88838383</color>
 </resources>

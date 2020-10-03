@@ -2,17 +2,47 @@ package com.example.tutkdemo;
 
 import android.util.Log;
 
+import com.example.tutkdemo.model.AudioPlayer;
 import com.example.tutkdemo.model.FrameBuffer;
+import com.example.tutkdemo.model.MediaHandler;
 import com.tutk.IOTC.AVAPIs;
 import com.tutk.IOTC.IOTCAPIs;
 
+import java.io.IOException;
+
 public class Client {
 
+    private Thread videoThread;
+    private Thread audioThread;
     private boolean Find_First_I_Frame = false;
+    private boolean stop = false;
+    private boolean isStop = false;
+    private String UID;
+    private String userName;
+    private String passWord;
+    private MediaHandler mediaHandler;
+    public boolean fuck = true;
 
-    public void start(String uid) {
 
-        System.out.println("StreamClient start...");
+    public Client(String UID, String userName, String passWord) throws IOException {
+        this.UID = UID;
+        this.userName = userName;
+        this.passWord = passWord;
+        mediaHandler = new MediaHandler();
+        mediaHandler.initDecoder();
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+
+    public boolean isStop() {
+        return isStop;
+    }
+
+    public void start() {
+
+        Log.i("刷新测试","StreamClient start...");
 
         int ret = IOTCAPIs.IOTC_Initialize2(0);
         Log.i("连接测试","IOTC_Initialize() ret = "+ ret);
@@ -30,11 +60,11 @@ public class Client {
             Log.i("连接测试","IOTC_Get_SessionID error code "+ sid);
             return;
         }
-        ret = IOTCAPIs.IOTC_Connect_ByUID_Parallel(uid, sid);
-        Log.i("连接测试","Step 2: call IOTC_Connect_ByUID_Parallel(%s)......."+ uid);
+        ret = IOTCAPIs.IOTC_Connect_ByUID_Parallel(UID, sid);
+        Log.i("连接测试","Step 2: call IOTC_Connect_ByUID_Parallel(%s)......."+ UID);
 
         int[] srvType = new int[1];
-        int avIndex = AVAPIs.avClientStart(sid, "admin", "123456", 20000, srvType, 0);
+        int avIndex = AVAPIs.avClientStart(sid, userName, passWord, 20000, srvType, 0);
         Log.i("连接测试","Step 2: call avClientStart(%d)......." + avIndex);
 
         if (avIndex < 0) {
@@ -43,19 +73,13 @@ public class Client {
         }
 
         if (startIpcamStream(avIndex)) {
-            Thread videoThread = new Thread(new VideoThread(avIndex),
+            videoThread = new Thread(new VideoThread(avIndex),
                     "Video Thread");
-            Thread audioThread = new Thread(new AudioThread(avIndex),
+            audioThread = new Thread(new AudioThread(avIndex),
                     "Audio Thread");
-            videoThread.start();
             audioThread.start();
-            try {
-                videoThread.join();
-            }
-            catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-                return;
-            }
+            videoThread.start();
+
             try {
                 audioThread.join();
             }
@@ -63,6 +87,15 @@ public class Client {
                 System.out.println(e.getMessage());
                 return;
             }
+
+            try {
+                videoThread.join();
+            }
+            catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+
         }
 
         AVAPIs.avClientStop(avIndex);
@@ -72,6 +105,7 @@ public class Client {
         AVAPIs.avDeInitialize();
         IOTCAPIs.IOTC_DeInitialize();
         Log.i("连接测试","StreamClient exit...\n");
+        isStop = true;
     }
 
     public static boolean startIpcamStream(int avIndex) {
@@ -125,7 +159,7 @@ public class Client {
             int[] outBufSize = new int[1];
             int[] outFrameSize = new int[1];
             int[] outFrmInfoBufSize = new int [1];
-            while (true) {
+            while (!stop) {
                 int[] frameNumber = new int[1];
                 int ret = av.avRecvFrameData2(avIndex, videoBuffer,
                         VIDEO_BUF_SIZE, outBufSize, outFrameSize,
@@ -179,13 +213,20 @@ public class Client {
                 else {
                     Log.i("信息测试","信息长度: " +outFrmInfoBufSize[0] + "  " + byteArrayToHexStr(frameInfo));
                     Log.i("信息测试","数据: " + byteArrayToHexStr(videoBuffer));
+                    byte[] bytes = new byte[videoBuffer.length];
+                    int length = ret;
+                    System.arraycopy(videoBuffer,0,bytes,0,videoBuffer.length);
                     Push_To_Buffer(videoBuffer, ret);
+                    if(Check_I_Frame(bytes,length))
+                    {
+                        Log.i("识别", "长度" + length);
+                        mediaHandler.createBitmap(bytes,0,length);
+//                        Bitmap bitmap = Bytes2Bimap(bytes, length);
+//                        if(fuck)
+//                            saveBitmap(bitmap, "/sdcard/chishi.jpeg");
+                    }
+
                 }
-//                else
-//                {
-//                    mainActivity.onFrame(videoBuffer,0 , ret);
-                //崩溃
-//                }
 
                 // Now the data is ready in videoBuffer[0 ... ret - 1]
                 // Do something here
@@ -210,6 +251,15 @@ public class Client {
         }
     }
 
+    public boolean Check_I_Frame(byte[] byteArray, int length)
+    {
+        byte[] bytes = new byte[1];
+        bytes[0] = byteArray[4];
+        Log.i("信息测试", "NAL类型：" + byteArrayToHexStr(bytes));
+        int NAL_type = byteArray[4] & 0x1F;
+        return NAL_type == 5 || NAL_type == 7 || NAL_type == 8 || NAL_type == 2;
+    }
+
     private void Push_To_Buffer(byte[] byteArray, int length)
     {
         FrameBuffer.queue.offer(byteArray);
@@ -230,11 +280,12 @@ public class Client {
         return new String(hexChars);
     }
 
-    public static class AudioThread implements Runnable {
+    public class AudioThread implements Runnable {
         static final int AUDIO_BUF_SIZE = 1024;
         static final int FRAME_INFO_SIZE = 16;
 
         private int avIndex;
+        private AudioPlayer AudioPlayer=new AudioPlayer();
 
         public AudioThread(int avIndex) {
             this.avIndex = avIndex;
@@ -248,7 +299,8 @@ public class Client {
             AVAPIs av = new AVAPIs();
             byte[] frameInfo = new byte[FRAME_INFO_SIZE];
             byte[] audioBuffer = new byte[AUDIO_BUF_SIZE];
-            while (true) {
+            AudioPlayer.mAudioTrack.play();
+            while (!stop) {
                 int ret = av.avCheckAudioBuf(avIndex);
 
                 if (ret < 0) {
@@ -264,6 +316,7 @@ public class Client {
                     }
                     catch (InterruptedException e) {
                         System.out.println(e.getMessage());
+                        AudioPlayer.mAudioTrack.stop();
                         break;
                     }
                 }
@@ -277,6 +330,15 @@ public class Client {
                     Log.i("连接测试","[%s] AV_ER_SESSION_CLOSE_BY_REMOTE "+
                             Thread.currentThread().getName());
                     break;
+                }
+                else if(ret == AVAPIs.AV_ER_DATA_NOREADY)
+                {
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    continue;
                 }
                 else if (ret == AVAPIs.AV_ER_REMOTE_TIMEOUT_DISCONNECT) {
                     Log.i("连接测试","[%s] AV_ER_REMOTE_TIMEOUT_DISCONNECT "+
@@ -296,11 +358,25 @@ public class Client {
 
                 // Now the data is ready in audioBuffer[0 ... ret - 1]
                 // Do something here
+                /*G711a convert to Pcm*/
+                byte[] PcmaudioBuf=new byte[AUDIO_BUF_SIZE];
+                Log.i("长度", String.valueOf(ret));
+                PcmaudioBuf=AudioPlayer.convertG711aToPcm(audioBuffer,ret,PcmaudioBuf);
+                Log.i("ret", "G711A\n");
+                Log.i("ret", byteArrayToHexStr(audioBuffer));
+                Log.i("ret", "PCM\n");
+                Log.i("ret", byteArrayToHexStr(PcmaudioBuf));
+                Log.i("Audiodate", String.valueOf(PcmaudioBuf.length));
+                AudioPlayer.mAudioTrack.write(PcmaudioBuf,0,PcmaudioBuf.length);
+//                AudioPlayer.mAudioTrack.play();
+//                AudioPlayer.mAudioTrack.stop();
+//                AudioPlayer.mAudioTrack.flush();
             }
 
             Log.i("连接测试","[%s] Exit "+
                     Thread.currentThread().getName());
         }
     }
+
 }
 

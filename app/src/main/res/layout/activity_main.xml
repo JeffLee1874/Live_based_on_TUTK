@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/BaseBoundary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
@@ -19,20 +18,16 @@
         android:textColor="@color/colorWhite"
         android:textSize="32sp" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/title"
         android:background="@color/colorWhite">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/pull_to_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <!--        <com.scwang.smart.refresh.header.BezierRadarHeader-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"/>-->
 
             <com.scwang.smartrefresh.header.PhoenixHeader
                 android:layout_width="match_parent"
@@ -46,21 +41,53 @@
                 android:divider="@null"
                 android:dividerHeight="0dp" />
 
-            <!--            android:text="@{page1.button}"-->
-            <!--            android:onClick="@{clickListener::click_start}"-->
-
-
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
     </LinearLayout>
 
-</LinearLayout>
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="page1"-->
-<!--            type="com.example.tutkdemo.view.page" />-->
-<!--        <variable-->
-<!--            name="clickListener"-->
-<!--            type="com.example.tutkdemo.model.pageholder" />-->
-<!--    </data>-->
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorTransparent"
+        app:fab_labelsPosition="left"
+        app:fab_addButtonColorNormal="@color/colorRed"
+        app:fab_addButtonColorPressed="@color/colorAccent"
+        app:fab_addButtonPlusIconColor="@color/colorWhite"
+
+
+        app:fab_addButtonSize="normal"
+        app:fab_expandDirection="up"
+        app:fab_labelStyle="@style/AppTheme">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_by_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/camera"
+            app:fab_colorNormal="#673AB7"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_title="Add device by UID,ACCOUNT,PASSWORD" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/configure_by_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/wifi"
+            app:fab_colorNormal="#673AB7"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_title="Reconfigure the device by WIFI" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</RelativeLayout>
 

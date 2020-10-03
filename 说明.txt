@@ -1,0 +1,13 @@
+---------version 1.0------------
+
+video from TUTK and Local      √
+ugly  GUI                                  √
+
+
+Explaination：
+
+Local h264 file path is defined with 
+          variable:FileParentPath in VideoDetailActivity.java
+
+You should modify this variable to fit your h264 file parent path.
+----------------------------------------------------------

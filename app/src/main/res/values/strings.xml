@@ -3,4 +3,18 @@
     <string name="start">START</string>
     <string name="title">Work Space</string>
     <string name="todo">TODO</string>
+    <string name="location">Location</string>
+
+    <string name="year">Year</string>
+    <string name="cache">Cache</string>
+    <string name="describtion">Describtion</string>
+    <string name="cache_file_list">Cache File List</string>
+    <string name="usage">Usage</string>
+    <string name="type_the_location_of_this_camera">  Type the location of this camera</string>
+    <string name="type_the_usage_of_this_camera">Type the usage of this camera</string>
+    <string name="type_your_account">Type your account</string>
+    <string name="type_your_password">Type your password</string>
+    <string name="type_uid_of_this_device">Type UID of this device</string>
+    <string name="live_stream">Live Stream Mode</string>
+    <string name="tf_on">TF ON</string>
 </resources>

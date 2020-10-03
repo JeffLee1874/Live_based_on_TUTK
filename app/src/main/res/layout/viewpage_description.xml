@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="5dp"
+        app:cardElevation="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/location"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/title_size"
+            app:drawableStartCompat="@drawable/location_information" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/type_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_textColor="@color/colorBlack"
+            android:hint="@string/type_the_location_of_this_camera"
+            app:met_clearButton="true"
+            app:met_hideUnderline="true"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="Type the location of this camera"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="5dp"
+        app:cardElevation="6dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_usage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/usage"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/title_size"
+                app:drawableLeftCompat="@drawable/usage" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/type_usage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:met_textColor="@color/colorBlack"
+                android:hint="@string/type_the_usage_of_this_camera"
+                app:met_clearButton="true"
+                app:met_hideUnderline="true"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="Type the usage of this camera"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/two_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <mazouri.statebutton.StateButton
+                    android:id="@+id/live_button"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:disabledBackground="@color/colorDarkGrey"
+                    app:disabledIcon="@drawable/file"
+                    app:disabledText="Invalid"
+                    app:disabledTextColor="#33ffffff"
+                    app:drawablePadding="10dp"
+                    app:enabledBackground="@color/colorWhite"
+                    app:enabledIcon="@drawable/live_fill"
+                    app:enabledText="@string/live_stream"
+                    app:enabledTextColor="@color/colorBlack"
+                    app:iconHeight="50dp"
+                    app:iconTopMargin="30dp"
+                    app:iconWidth="50dp"
+                    app:selectedBackground="@color/colorDarkGrey"
+                    app:selectedIcon="@drawable/file"
+                    app:selectedText="Local File Mode"
+                    app:selectedTextColor="@color/colorWhite"
+                    app:state="enabled" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_middle"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:id="@+id/save_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@android:color/darker_gray"
+                    app:btn_color="@android:color/darker_gray"
+                    app:btn_fill_color="#FF6666"
+                    app:allow_random_color="true"
+                    app:enable_flashing="true"
+                    app:big_shine_color="#FF6666"
+                    app:click_animation_duration="200"
+                    app:shine_animation_duration="1500"
+                    app:shine_turn_angle="10"
+                    app:small_shine_offset_angle="20"
+                    app:shine_distance_multiple="1.5"
+                    app:small_shine_color="#CC9999"
+                    app:shine_count="8"
+                    app:siShape="@raw/star"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <mazouri.statebutton.StateButton
+                    android:id="@+id/TF_button"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:disabledBackground="@color/colorDarkGrey"
+                    app:disabledIcon="@drawable/off"
+                    app:disabledText="Invalid"
+                    app:disabledTextColor="#33ffffff"
+                    app:drawablePadding="10dp"
+                    app:enabledBackground="@color/colorWhite"
+                    app:enabledIcon="@drawable/on"
+                    app:enabledText="TF ON"
+                    app:enabledTextColor="@color/colorBlack"
+                    app:iconHeight="50dp"
+                    app:iconTopMargin="30dp"
+                    app:iconWidth="50dp"
+                    app:selectedBackground="@color/colorDarkGrey"
+                    app:selectedIcon="@drawable/off"
+                    app:selectedText="TF OFF"
+                    app:selectedTextColor="@color/colorWhite"
+                    app:state="enabled" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
